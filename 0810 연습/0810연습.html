@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>☕ OMNI COFFEE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="0810style.css">
+</head>
+<body>
+    <header>
+        <h1>☕ OMNI COFFEE</h1>
+        <p>환영합니다! 원하시는 메뉴를 선택해주세요.</p>
+    </header>
+
+    <main class="menu-container">
+        </main>
+
+    <aside class="modal-container" id="modal-container">
+        <div class="modal">
+            <button class="close-btn">&times;</button>
+            <h2 id="modal-title"></h2>
+            <p id="modal-description"></p>
+            <p id="modal-price"></p>
+            <button class="order-btn">장바구니 담기</button>
+        </div>
+    </aside>
+
+    <div class="cart-summary">
+        <h2>🛍️ 장바구니</h2>
+        <p>총 결제 금액: <span id="total-price">0</span>원</p>
+        <button class="checkout-btn">결제하기</button>
+    </div>
+
+    <div class="features">
+        <div class="like-favorites">
+            <h2>❤️ 좋아요 & 즐겨찾기</h2>
+            <ul id="favorites-list">
+                </ul>
+        </div>
+        <div class="store-location">
+            <h2>📍 매장 안내</h2>
+            <div id="map">
+                <p>1~5호점 지도</p>
+                <ul>
+                    <li>1호점: 서울 강남구</li>
+                    <li>2호점: 서울 서초구</li>
+                    <li>3호점: 서울 마포구</li>
+                    <li>4호점: 서울 용산구</li>
+                    <li>5호점: 서울 성동구</li>
+                </ul>
+                <p>자세한 위치는 추후 업데이트 예정입니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="coffee-beans-animation">
+        <div class="bean"></div>
+        <div class="bean"></div>
+        <div class="bean"></div>
+        <div class="bean"></div>
+        <div class="bean"></div>
+        <div class="bean"></div>
+        <div class="bean"></div>
+        <div class="bean"></div>
+        <div class="bean"></div>
+        <div class="bean"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
