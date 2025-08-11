@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inherit(상속) 속성 알아보기</title>
+
+    <style>
+        div {
+            color: red;
+        }
+        h1 {
+            color: blue;
+        }
+        div span:nth-child(4) {
+            color: olive;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="parent">
+        Parent
+        <span>Child Span</span>
+        <h1>Heading Element - Child</h1>
+        <p class="child">
+            Child Element
+            <span class="grand-child">Grand-child</span>
+        </p>
+        <span>Child Span2</span>
+        <span>Child Span3</span>
+    </div>
+
+</body>
+</html>
