@@ -25,7 +25,6 @@
         line-height: 220%;
     }
 
-
     .container {
         border: 1px solid gold;
         width: 100vw;
@@ -50,9 +49,10 @@
     }
 
     img {
-        width: 271px;
+        width: 200px;
+        height: auto;
         display: flex;
-        align-items: center;
+
     }
 
 
@@ -69,5 +69,14 @@
 
     p {
         color: #fff;
-    
+        font-size: 18px;
+        line-height: 1.2;
+        margin-top: 20px;
+    }
+
+
+    .link-container {
+        font-size: 18px;
+        line-height: 2;
+        
     }
