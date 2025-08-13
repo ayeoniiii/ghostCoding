@@ -24,3 +24,50 @@
         font-size: 18px;
         line-height: 220%;
     }
+
+
+    .container {
+        border: 1px solid gold;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        gap: auto;
+        align-items: center;
+        justify-content: center;
+    }
+
+    a {
+        background-color: #1E1E1E;
+        color: #fff;
+        border-radius: 8px;
+        height: 42px;
+        width: 283px;
+        margin: 8 auto;
+        display: inline-block;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    img {
+        width: 271px;
+        display: flex;
+        align-items: center;
+    }
+
+
+    .all-container {
+        border: 1px solid rgb(255, 30, 161);
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        gap: auto;
+        align-items: center;
+        justify-content: center;
+    }
+
+    p {
+        color: #fff;
+    
+    }
