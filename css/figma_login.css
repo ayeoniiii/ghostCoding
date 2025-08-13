@@ -1,0 +1,35 @@
+@charset "utf-8";
+
+body {
+    background-color: #2c2c2c;
+    color: #fff;
+    font-family: sans-serif;
+}
+
+.container {
+    border: 1px solid gold;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+a {
+    background-color: #1E1E1E;
+    color: #fff;
+    border-radius: 8px;
+    height: 42px;
+    width: 283px;
+    margin: 8 auto;
+    display: inline-block;
+    text-align: center;
+}
+
+img {
+    width: 271px;
+    display: flex;
+align-items: center;
+}
