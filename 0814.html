@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>thumb-card</title>
+
+    <style>
+
+        body {
+            /*background-color: rgb(35, 56, 37);
+            color: rgb(231, 243, 233);
+            background-image: url('./images/thumb_4.png');
+            background-repeat: no-repeat;
+            background-position: right bottom;
+            background-size: 80% auto;
+            background-attachment: fixed;
+          
+            background: #4f4672 url("./images/irangi_5.png") no-repeat
+            right bottom /80% auto fixed;  */
+
+            background: #000000;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 1) 1%, rgba(46, 18, 30, 1) 24%, rgba(54, 13, 31, 1) 52%, rgba(33, 16, 24, 1) 78%, rgba(0, 0, 0, 1) 100%);
+            
+        }
+        .thumb {
+            width: 240px;
+            height: 170px;
+            border-radius: 12px 12px 0 0;
+            outline: 2px solid red;
+            overflow: hidden; /*이미지 사이즈 잘라서 내가 볼 구간만 볼 수 있게*/
+        }
+
+         .thumb-ir {
+            width: 240px;
+            height: 170px;
+            border-radius: 12px 12px 0 0;
+            outline: 2px solid red;
+            overflow: hidden; /*이미지 사이즈 잘라서 내가 볼 구간만 볼 수 있게*/
+            margin-top: 20px;
+            background-image: url('./images/profile_1.jpg');
+            background-size: no-repeat;
+            background-position: right 20px center -10px ; /*오른쪽에서 20px 이동해!*/
+            /* background-size: 80px auto; 가로, 세로 순서로 , repeat-x 가로 반복*/
+        }
+
+        .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /*이미지가 길게 늘어나서 보기 싫을 떄, 상하좌우로 잘리지만 안찌그러짐*/
+        }
+
+        .blind {
+            /* display: none; 안보이긴 하지만 추가적으로 접근성의 문제가 생김 */
+    
+                position: absolute; /*절대좌표*/
+                clip: rect(0 0 0 0); /*crop같은 기능*/
+                width: 1px;
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+                }
+        
+        section {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-sizing: border-box;
+            margin: auto;
+
+            background-image: url('./images/ghost_n1.png');
+            background-repeat: no-repeat;
+            background-position: right bottom;
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="thumb">
+        <img src="./images/profile_1.jpg" alt="thumb">
+    </div>
+
+    <div class="thumb-ir"> <!--ir 기법으로 이미지를 넣기-->
+        <span class="blind">illust image</span>
+
+    </div>
+
+    <section>
+        <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit.Reiciendis in praesentium rerum idvoluptates voluptatem fugit! Aliquid ducimus eius,iure aut dolore corporis quasiquae nobis ea vitae ratione labore?
+        </p>
+        <p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit voluptates labore dicta consequatur, ad deleniti iure minima, ex debitis eius quae iusto vero laudantium. Modi magnam aperiam voluptatem obcaecati error.
+            Deleniti impedit vel error dicta doloribus aliquid quod cupiditate labore perferendis suscipit tempore, esse dolorem dignissimos, pariatur veniam! Nam veritatis vero corporis repellat laborum molestiae maiores laudantium. Eligendi, doloremque cupiditate.
+            Sed minima reprehenderit ducimus officia iste dignissimos commodi repudiandae porro maxime harum. Ea molestias reiciendis autem, amet eligendi numquam. Qui ab voluptatem sapiente alias maiores quo fugiat facilis nemo in.
+            Dolorem architecto explicabo atque maiores earum facere quas officiis vero asperiores rem delectus voluptatum quisquam ducimus exercitationem perspiciatis illo culpa eligendi nesciunt et quibusdam voluptate, inventore quidem. Deserunt, eum eaque.
+            Cupiditate ratione, sunt eos voluptates provident accusantium alias totam ut, minima ipsa quidem, consectetur voluptatum qui nemo laboriosam ab repudiandae placeat numquam? Ex reprehenderit aut dicta, sit exercitationem dolores alias.
+        </p>
+        <p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit voluptates labore dicta consequatur, ad deleniti iure minima, ex debitis eius quae iusto vero laudantium. Modi magnam aperiam voluptatem obcaecati error.
+            Deleniti impedit vel error dicta doloribus aliquid quod cupiditate labore perferendis suscipit tempore, esse dolorem dignissimos, pariatur veniam! Nam veritatis vero corporis repellat laborum molestiae maiores laudantium. Eligendi, doloremque cupiditate.
+            Sed minima reprehenderit ducimus officia iste dignissimos commodi repudiandae porro maxime harum. Ea molestias reiciendis autem, amet eligendi numquam. Qui ab voluptatem sapiente alias maiores quo fugiat facilis nemo in.
+            Dolorem architecto explicabo atque maiores earum facere quas officiis vero asperiores rem delectus voluptatum quisquam ducimus exercitationem perspiciatis illo culpa eligendi nesciunt et quibusdam voluptate, inventore quidem. Deserunt, eum eaque.
+            Cupiditate ratione, sunt eos voluptates provident accusantium alias totam ut, minima ipsa quidem, consectetur voluptatum qui nemo laboriosam ab repudiandae placeat numquam? Ex reprehenderit aut dicta, sit exercitationem dolores alias.
+        </p><p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit voluptates labore dicta consequatur, ad deleniti iure minima, ex debitis eius quae iusto vero laudantium. Modi magnam aperiam voluptatem obcaecati error.
+            Deleniti impedit vel error dicta doloribus aliquid quod cupiditate labore perferendis suscipit tempore, esse dolorem dignissimos, pariatur veniam! Nam veritatis vero corporis repellat laborum molestiae maiores laudantium. Eligendi, doloremque cupiditate.
+            Sed minima reprehenderit ducimus officia iste dignissimos commodi repudiandae porro maxime harum. Ea molestias reiciendis autem, amet eligendi numquam. Qui ab voluptatem sapiente alias maiores quo fugiat facilis nemo in.
+            Dolorem architecto explicabo atque maiores earum facere quas officiis vero asperiores rem delectus voluptatum quisquam ducimus exercitationem perspiciatis illo culpa eligendi nesciunt et quibusdam voluptate, inventore quidem. Deserunt, eum eaque.
+            Cupiditate ratione, sunt eos voluptates provident accusantium alias totam ut, minima ipsa quidem, consectetur voluptatum qui nemo laboriosam ab repudiandae placeat numquam? Ex reprehenderit aut dicta, sit exercitationem dolores alias.
+        </p><p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit voluptates labore dicta consequatur, ad deleniti iure minima, ex debitis eius quae iusto vero laudantium. Modi magnam aperiam voluptatem obcaecati error.
+            Deleniti impedit vel error dicta doloribus aliquid quod cupiditate labore perferendis suscipit tempore, esse dolorem dignissimos, pariatur veniam! Nam veritatis vero corporis repellat laborum molestiae maiores laudantium. Eligendi, doloremque cupiditate.
+            Sed minima reprehenderit ducimus officia iste dignissimos commodi repudiandae porro maxime harum. Ea molestias reiciendis autem, amet eligendi numquam. Qui ab voluptatem sapiente alias maiores quo fugiat facilis nemo in.
+            Dolorem architecto explicabo atque maiores earum facere quas officiis vero asperiores rem delectus voluptatum quisquam ducimus exercitationem perspiciatis illo culpa eligendi nesciunt et quibusdam voluptate, inventore quidem. Deserunt, eum eaque.
+            Cupiditate ratione, sunt eos voluptates provident accusantium alias totam ut, minima ipsa quidem, consectetur voluptatum qui nemo laboriosam ab repudiandae placeat numquam? Ex reprehenderit aut dicta, sit exercitationem dolores alias.
+        </p><p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit voluptates labore dicta consequatur, ad deleniti iure minima, ex debitis eius quae iusto vero laudantium. Modi magnam aperiam voluptatem obcaecati error.
+            Deleniti impedit vel error dicta doloribus aliquid quod cupiditate labore perferendis suscipit tempore, esse dolorem dignissimos, pariatur veniam! Nam veritatis vero corporis repellat laborum molestiae maiores laudantium. Eligendi, doloremque cupiditate.
+            Sed minima reprehenderit ducimus officia iste dignissimos commodi repudiandae porro maxime harum. Ea molestias reiciendis autem, amet eligendi numquam. Qui ab voluptatem sapiente alias maiores quo fugiat facilis nemo in.
+            Dolorem architecto explicabo atque maiores earum facere quas officiis vero asperiores rem delectus voluptatum quisquam ducimus exercitationem perspiciatis illo culpa eligendi nesciunt et quibusdam voluptate, inventore quidem. Deserunt, eum eaque.
+            Cupiditate ratione, sunt eos voluptates provident accusantium alias totam ut, minima ipsa quidem, consectetur voluptatum qui nemo laboriosam ab repudiandae placeat numquam? Ex reprehenderit aut dicta, sit exercitationem dolores alias.
+        </p>
+    </section>
+
+</body>
+</html>
