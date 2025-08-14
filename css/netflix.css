@@ -3,6 +3,7 @@ body { background-color: #000000;
         background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 1%, rgba(46, 18, 30, 0.5) 24%, rgba(54, 13, 31, 0.5) 52%, rgba(33, 16, 24, 0.5) 70%, rgba(0, 0, 0, 0.5) 70%),  url('./images/netflix_bg.png');
         background-repeat: no-repeat;
         background-attachment: fixed;
+        d
     }
 
     .page-header {
@@ -39,6 +40,8 @@ body { background-color: #000000;
     margin: 10px;
     color:#fff;
     padding: 10px;
+    background-image: url(../images/image-lang-icon.svg);
+    background-repeat: no-repeat;
     text-decoration: none;
 }
 
@@ -83,14 +86,14 @@ body { background-color: #000000;
         }
 
     p {
-    font-family: sans-serif;
-    color: #fff;
-    width: 100%;
-    max-width: 800px;
-    padding: 20px;
-    box-sizing: border-box;
-    margin: auto;
-    text-align: center;
+        font-family: sans-serif;
+        color: #fff;
+        width: 100%;
+        max-width: 800px;
+        padding: 5px;
+        box-sizing: border-box;
+        margin: auto;
+        text-align: center;
         }
 
 
@@ -104,11 +107,30 @@ justify-content: center;
 align-items: center;
 }
 
-.input_emil {
-    width: 480px;
-    height: 48px;
+.input_email {
+    width: 100% 
+    height: 100% 
+    font-size: 16px;
+    color: white;
+    background-color: rgb(30, 30, 30);
+    border-color: gray;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    max-width: 600px;
+    margin: 10px;
+    padding: 20px 80px;
 }
 
 .submit_email {
-
+    height: 56px;
+    padding: 0 24px;
+    background: #e50914;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0; /* 오른쪽만 둥글게 */
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
 }
