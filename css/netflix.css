@@ -42,7 +42,9 @@ body { background-color: #000000;
     padding: 10px;
     background-image: url(../images/image-lang-icon.svg);
     background-repeat: no-repeat;
+    background-size: auto;
     text-decoration: none;
+
 }
 
 .btn_login {
@@ -108,29 +110,25 @@ align-items: center;
 }
 
 .input_email {
-    width: 100% 
-    height: 100% 
-    font-size: 16px;
-    color: white;
-    background-color: rgb(30, 30, 30);
-    border-color: gray;
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    max-width: 600px;
-    margin: 10px;
-    padding: 20px 80px;
+display: flex;
+ align-items: flex-end;
+ justify-content: center;
+ width:100%;
+ height: 100%;
 }
 
 .submit_email {
-    height: 56px;
-    padding: 0 24px;
-    background: #e50914;
-    color: white;
-    border: none;
-    border-radius: 0 4px 4px 0; /* 오른쪽만 둥글게 */
-    font-size: 16px;
+display: flex;
+ align-items: flex-start;
+ justify-content: center;
+ width:100%;
+ height: 100%;
+}
+
+
+.submit {
+    width: 80%; /* 박스의 80% 크기 */
+    height: 70%; /* 박스의 70% 높이 */
+    font-size: 20px;
     font-weight: bold;
-    cursor: pointer;
-    white-space: nowrap;
 }
