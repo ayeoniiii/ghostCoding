@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        /* ================================
+   기본 세팅 & 디자인 토큰
+   ================================ */
+:root {
+  --bg: #0b0b0b;
+  --surface: #141414;
+  --muted: #a3a3a3;
+  --text: #ffffff;
+  --text-dim: #d4d4d4;
+  --primary: #e50914;        /* Netflix 레드 톤 */
+  --primary-press: #b00710;
+  --outline: #3b82f6;        /* 포커스 링 */
+  --card: #1a1a1a;
+  --border: #262626;
+
+  --radius: 12px;
+  --shadow: 0 6px 24px rgba(0,0,0,.35);
+  --maxw: 1160px;
+}
+
+/* ================================
+   리셋 & 타이포
+   ================================ */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Apple SD Gothic Neo, Noto Sans KR, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg, video { display:block; max-width:100%; }
+a { color: inherit; text-decoration: none; }
+p { color: var(--text-dim); }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+.visually-hidden {
+  position: absolute !important;
+  clip: rect(0,0,0,0);
+  clip-path: inset(50%);
+  width: 1px; height: 1px;
+  overflow: hidden; white-space: nowrap;
+  border: 0; padding: 0; margin: -1px;
+}
+
+/* 공용 컨테이너 */
+header > nav,
+main > section,
+footer > nav,
+footer > section { 
+  width: min(100%, var(--maxw));
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 24px);
+}
+
+/* 포커스 가시성 */
+:where(a, button, input, select, summary):focus-visible {
+  outline: 3px solid var(--outline);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* 버튼 공통 */
+button, .btn {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  border-radius: 10px;
+  background: var(--primary);
+  color: #fff;
+  padding: 12px 18px;
+  font-weight: 700;
+  line-height: 1;
+  transition: transform .06s ease, background .2s ease, opacity .2s ease;
+}
+button:hover, .btn:hover { opacity: .95; }
+button:active, .btn:active { transform: translateY(1px); background: var(--primary-press); }
+
+/* 링크형 버튼 */
+.btn-login {
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-radius: 10px;
+}
+.btn-login:hover { background: #1f1f1f; }
+
+/* ================================
+   헤더
+   ================================ */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: linear-gradient(to bottom, rgba(0,0,0,.65), rgba(0,0,0,0));
+  backdrop-filter: saturate(120%) blur(6px);
+}
+header.scrolled { background: rgba(0,0,0,.7); }
+
+nav[aria-label="Global"] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 72px;
+  gap: 16px;
+}
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--primary);
+}
+.nav-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav-actions > button[aria-haspopup="listbox"] {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+/* ================================
+   히어로/가입 폼
+   ================================ */
+main > section:first-of-type {
+  padding-top: clamp(48px, 10vw, 96px);
+  padding-bottom: clamp(32px, 8vw, 72px);
+  background:
+    radial-gradient(1200px 600px at 70% -20%, rgba(229,9,20,.25), transparent 60%),
+    radial-gradient(800px 400px at 20% -10%, rgba(229,9,20,.15), transparent 60%),
+    linear-gradient(to bottom, rgba(0,0,0,.3), transparent 40%);
+}
+section[aria-labelledby="hero-title"] {
+  display: grid;
+  gap: 18px;
+  text-align: center;
+}
+#hero-title {
+  font-size: clamp(28px, 5vw, 54px);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+section[aria-labelledby="hero-title"] > p {
+  margin: 0 auto;
+  max-width: 760px;
+  font-size: clamp(15px, 2vw, 18px);
+}
+
+form[action="/signup"],
+form[aria-label="이메일 재입력"] {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20,20,20,.7);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin: 10px auto 0;
+  max-width: 720px;
+  box-shadow: var(--shadow);
+}
+form[action="/signup"] p,
+form[aria-label="이메일 재입력"] p {
+  grid-column: 1 / -1;
+  margin: 0 0 4px 0;
+  color: var(--text-dim);
+  text-align: left;
+}
+
+input[type="email"] {
+  width: 100%;
+  height: 48px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #0f0f0f;
+  color: var(--text);
+  padding: 0 14px;
+  font-size: 16px;
+}
+input[type="email"]::placeholder { color: #8a8a8a; }
+input[type="email"]:focus { border-color: #3a3a3a; }
+
+form button[type="submit"] {
+  height: 48px;
+  padding: 0 18px;
+  white-space: nowrap;
+}
+
+/* 프로모션 어사이드 */
+section[aria-labelledby="hero-title"] > aside {
+  margin: 8px auto 0;
+  padding: 14px 16px;
+  background: #101010;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  max-width: 720px;
+  text-align: left;
+}
+section[aria-labelledby="hero-title"] > aside h2 {
+  font-size: clamp(18px, 2.2vw, 22px);
+  margin: 0 0 4px 0;
+}
+
+/* ================================
+   지금 뜨는 콘텐츠 (Top 10)
+   ================================ */
+section[aria-labelledby="trending-title"] {
+  padding: clamp(24px, 6vw, 56px) 0;
+}
+#trending-title {
+  font-size: clamp(20px, 3.2vw, 28px);
+  margin: 0 0 16px 0;
+}
+.grid.grid--10 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+@media (max-width: 900px) {
+  .grid.grid--10 { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 640px) {
+  .grid.grid--10 { grid-template-columns: repeat(2, 1fr); }
+}
+.grid.grid--10 li {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px;
+  min-height: 110px;
+  display: grid;
+  align-content: end;
+  overflow: hidden;
+}
+.grid.grid--10 li .rank {
+  position: absolute;
+  top: 8px; left: 10px;
+  font-weight: 900;
+  font-size: 22px;
+  opacity: .18;
+}
+.grid.grid--10 li a {
+  font-weight: 700;
+  display: inline-block;
+}
+
+/* ================================
+   Value Props (기사 스타일 카드)
+   ================================ */
+section[aria-labelledby="reasons-title"] {
+  padding: clamp(24px, 6vw, 56px) 0;
+  display: grid;
+  gap: 18px;
+}
+#reasons-title {
+  font-size: clamp(20px, 3.2vw, 28px);
+  margin: 0 0 8px 0;
+}
+section[aria-labelledby="reasons-title"] article {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+section[aria-labelledby="reasons-title"] article h3 {
+  margin: 0 0 6px 0;
+  font-size: 18px;
+}
+
+/* ================================
+   FAQ (details/summary)
+   ================================ */
+section[aria-labelledby="faq-title"] {
+  padding: clamp(24px, 6vw, 56px) 0;
+}
+#faq-title {
+  font-size: clamp(20px, 3.2vw, 28px);
+  margin: 0 0 12px 0;
+}
+details {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0 16px;
+  margin-bottom: 12px;
+}
+summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 16px 0;
+  font-weight: 700;
+  position: relative;
+}
+summary::-webkit-details-marker { display: none; }
+summary::after {
+  content: "+";
+  position: absolute;
+  right: 0; top: 50%; transform: translateY(-50%);
+  font-weight: 900;
+  opacity: .6;
+}
+details[open] summary::after { content: "–"; }
+details p {
+  margin: 0 0 16px 0;
+  color: var(--text-dim);
+  padding-right: 28px;
+}
+details a { text-decoration: underline; }
+
+/* ================================
+   푸터
+   ================================ */
+footer {
+  border-top: 1px solid var(--border);
+  background: #0e0e0e;
+  margin-top: 40px;
+  padding-top: 28px;
+  padding-bottom: 40px;
+}
+footer p, footer a { color: #c6c6c6; }
+footer > nav ul {
+  columns: 2;
+  column-gap: 24px;
+}
+@media (min-width: 720px) {
+  footer > nav ul { columns: 4; }
+}
+footer > nav li { margin: 8px 0; }
+footer section[aria-label="사업자 정보"] {
+  margin-top: 18px;
+  font-size: 14px;
+  color: #bcbcbc;
+}
+footer address { font-style: normal; }
+footer section[aria-label="언어 선택"] {
+  margin-top: 18px;
+  display: grid;
+  gap: 8px;
+}
+footer select {
+  width: fit-content;
+  background: #131313;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+/* ================================
+   모션 선호도 대응
+   ================================ */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ================================
+   유틸 (스크롤 시 헤더 배경 강화)
+   ================================ */
+/* 아래 스니펫은 JS로 .scrolled 토글 시 사용
+   window.addEventListener('scroll',()=>document.querySelector('header')
+     .classList.toggle('scrolled', window.scrollY > 4)); */
+    </style>
+</head>
+<body>
+    <!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>넷플릭스 대한민국 - 영화, 시리즈 등을 무제한으로</title>
+</head>
+<body>
+  <header>
+    <nav aria-label="Global">
+      <a href="/" class="logo" aria-label="Netflix Home">Netflix</a>
+      <div class="nav-actions">
+        <button type="button" aria-haspopup="listbox" aria-label="언어 선택">한국어</button>
+        <a href="/login" class="btn-login">로그인</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="content">
+    <!-- Hero / Sign-up -->
+    <section aria-labelledby="hero-title">
+      <h1 id="hero-title">영화, 시리즈 등을 무제한으로</h1>
+      <p>$7.99으로 시작하세요. 멤버십은 언제든지 해지 가능합니다.</p>
+
+      <form action="/signup" method="get" aria-label="회원 가입 또는 재시작">
+        <p>시청할 준비가 되셨나요? 멤버십을 등록하거나 재시작하려면 이메일 주소를 입력하세요.</p>
+        <label for="email" class="visually-hidden">이메일 주소</label>
+        <input id="email" name="email" type="email" inputmode="email" placeholder="이메일 주소" required />
+        <button type="submit">시작하기</button>
+      </form>
+
+      <aside aria-label="프로모션">
+        <h2>$7.99이면 만날 수 있는 넷플릭스.</h2>
+        <p>가장 경제적인 광고형 멤버십을 이용해 보세요.</p>
+        <a href="/signup/ads">자세히 알아보기</a>
+      </aside>
+    </section>
+
+    <!-- Trending Now / Carousel -->
+    <section aria-labelledby="trending-title">
+      <h2 id="trending-title">지금 뜨는 콘텐츠</h2>
+      <ol class="grid grid--10" aria-label="Top 10">
+        <li>
+          <a href="/title/..." aria-label="케이팝 데몬 헌터스">케이팝 데몬 헌터스</a>
+          <span class="rank">1</span>
+        </li>
+        <li>
+          <a href="/title/...">트리거</a><span class="rank">2</span>
+        </li>
+        <li>
+          <a href="/title/...">모태솔로지만 연애는 하고 싶어</a><span class="rank">3</span>
+        </li>
+        <li>
+          <a href="/title/...">거룩한 밤: 데몬 헌터스</a><span class="rank">4</span>
+        </li>
+        <li>
+          <a href="/title/...">오징어 게임</a><span class="rank">5</span>
+        </li>
+        <li>
+          <a href="/title/...">폭싹 속았수다</a><span class="rank">6</span>
+        </li>
+        <li>
+          <a href="/title/...">웬즈데이</a><span class="rank">7</span>
+        </li>
+        <li>
+          <a href="/title/...">에스콰이어: 변호사를 꿈꾸는 변호사들</a><span class="rank">8</span>
+        </li>
+        <li>
+          <a href="/title/...">84㎡ (84제곱미터)</a><span class="rank">9</span>
+        </li>
+        <li>
+          <a href="/title/...">광장</a><span class="rank">10</span>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Value Props -->
+    <section aria-labelledby="reasons-title">
+      <h2 id="reasons-title">가입해야 하는 또 다른 이유</h2>
+
+      <article>
+        <h3>TV로 즐기세요</h3>
+        <p>스마트 TV, PlayStation, Xbox, Chromecast, Apple TV, 블루레이 플레이어 등 다양한 디바이스에서 시청하세요.</p>
+      </article>
+
+      <article>
+        <h3>즐겨 보는 콘텐츠를 저장해 오프라인으로 시청하세요</h3>
+        <p>간편하게 저장하고 빈틈없이 즐겨보세요.</p>
+      </article>
+
+      <article>
+        <h3>다양한 디바이스로 시청하세요</h3>
+        <p>각종 영화와 시리즈를 스마트폰, 태블릿, 노트북, TV에서 무제한으로 스트리밍하세요.</p>
+      </article>
+
+      <article>
+        <h3>어린이 전용 프로필을 만들어 보세요</h3>
+        <p>자녀 보호 기능과 함께 가족용 시리즈와 영화를 안전하게 즐길 수 있습니다.</p>
+      </article>
+    </section>
+
+    <!-- FAQ -->
+    <section aria-labelledby="faq-title">
+      <h2 id="faq-title">자주 묻는 질문</h2>
+      <details>
+        <summary>넷플릭스에서 어떤 콘텐츠를 시청할 수 있나요?</summary>
+        <p>장편 영화, 다큐멘터리, 시리즈, 애니메이션, 오리지널 등 무궁무진한 콘텐츠를 시청할 수 있습니다.
+          <a href="/browse">넷플릭스 콘텐츠를 한번 살펴보세요</a>.</p>
+      </details>
+
+      <details>
+        <summary>넷플릭스란 무엇인가요?</summary>
+        <p>다양한 콘텐츠를 수천 종의 디바이스에서 즐길 수 있는 스트리밍 서비스입니다.</p>
+      </details>
+
+      <details>
+        <summary>넷플릭스 요금은 얼마인가요?</summary>
+        <p>월 $7.99 ~ $24.99. 추가 비용이나 약정 없음.</p>
+      </details>
+
+      <details>
+        <summary>어디에서 시청할 수 있나요?</summary>
+        <p>PC, 스마트 TV, 스마트폰, 태블릿, 게임 콘솔 등에서 계정 로그인 후 시청 가능합니다. 모바일 앱에서는 저장 기능 제공.</p>
+      </details>
+
+      <details>
+        <summary>멤버십을 해지하려면 어떻게 하나요?</summary>
+        <p>온라인에서 클릭 두 번으로 해지 가능. 수수료 없음.</p>
+      </details>
+
+      <details>
+        <summary>아이들이 넷플릭스를 봐도 좋을까요?</summary>
+        <p>키즈 프로필과 PIN 기반 자녀 보호 기능 제공.</p>
+      </details>
+
+      <form action="/signup" method="get" aria-label="이메일 재입력">
+        <p>시청할 준비가 되셨나요? 멤버십을 등록하거나 재시작하려면 이메일 주소를 입력하세요.</p>
+        <label for="email2" class="visually-hidden">이메일 주소</label>
+        <input id="email2" name="email" type="email" placeholder="이메일 주소" required />
+        <button type="submit">시작하기</button>
+      </form>
+    </section>
+  </main>
+
+  <footer aria-labelledby="footer-title">
+    <h2 id="footer-title" class="visually-hidden">푸터</h2>
+
+    <p>질문이 있으신가요? 문의 전화: 1-866-952-4456</p>
+
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="https://help.netflix.com">자주 묻는 질문</a></li>
+        <li><a href="https://help.netflix.com/ko">고객 센터</a></li>
+        <li><a href="/youraccount">계정</a></li>
+        <li><a href="https://media.netflix.com">미디어 센터</a></li>
+        <li><a href="https://ir.netflix.com">투자 정보(IR)</a></li>
+        <li><a href="https://jobs.netflix.com">입사 정보</a></li>
+        <li><a href="/watch">넷플릭스 지원 디바이스</a></li>
+        <li><a href="https://help.netflix.com/legal/termsofuse">이용 약관</a></li>
+        <li><a href="https://help.netflix.com/legal/privacy">개인정보 처리방침</a></li>
+        <li><button type="button">쿠키 설정</button></li>
+        <li><a href="https://help.netflix.com/legal/corpinfo">회사 정보</a></li>
+        <li><a href="https://help.netflix.com/contactus">문의하기</a></li>
+        <li><a href="https://fast.com">속도 테스트</a></li>
+        <li><a href="https://help.netflix.com/legal/notices">법적 고지</a></li>
+        <li><a href="/browse/genre/839338">오직 넷플릭스에서</a></li>
+      </ul>
+    </nav>
+
+    <section aria-label="사업자 정보">
+      <p>넷플릭스 대한민국</p>
+      <address>
+        넷플릭스서비시스코리아 유한회사<br />
+        통신판매업신고번호: 제2018-서울종로-0426호<br />
+        전화번호: 1-866-952-4456<br />
+        대표: 레지널드 숀 톰프슨<br />
+        이메일: <a href="mailto:korea@netflix.com">korea@netflix.com</a><br />
+        주소: 대한민국 서울특별시 종로구 우정국로 26, 센트로폴리스 A동 20층 (03161)<br />
+        사업자등록번호: 165-87-00119<br />
+        클라우드 호스팅: Amazon Web Services Inc.
+      </address>
+    </section>
+
+    <section aria-label="언어 선택">
+      <label for="lang" class="visually-hidden">언어 선택</label>
+      <select id="lang" name="lang">
+        <option value="ko" selected>한국어</option>
+        <option value="en">English</option>
+      </select>
+      <p>이 페이지는 Google reCAPTCHA의 보호를 받습니다.
+        <a href="https://policies.google.com/privacy">개인정보처리방침</a>과
+        <a href="https://policies.google.com/terms">서비스 약관</a> 적용.</p>
+      <a href="https://www.ftc.go.kr">공정거래위원회 웹사이트</a>
+    </section>
+  </footer>
+</body>
+</html>
+</body>
+</html>

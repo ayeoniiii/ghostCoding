@@ -7,6 +7,11 @@
 
     <style>
 
+        :root {
+            --primary: #d81e27;
+            --title: 56px;
+        }
+
         body {
             /*background-color: rgb(35, 56, 37);
             color: rgb(231, 243, 233);
@@ -41,7 +46,7 @@
             background-image: url('./images/profile_1.jpg');
             background-size: no-repeat;
             background-position: right 20px center -10px ; /*오른쪽에서 20px 이동해!*/
-            /* background-size: 80px auto; 가로, 세로 순서로 , repeat-x 가로 반복*/
+            /* background-size: 80px auto; 가로, 세로 순서로 repeat-x 가로 반복*/
         }
 
         .thumb img {
@@ -60,7 +65,7 @@
                 margin: -1px;
                 overflow: hidden;
                 }
-        
+
         section {
             width: 100%;
             max-width: 800px;
@@ -72,8 +77,32 @@
             background-image: url('./images/ghost_n1.png');
             background-repeat: no-repeat;
             background-position: right bottom;
-
         }
+
+        .title {
+            color: var(--primary);
+            font-size: var(--title);
+        }
+
+
+
+        .html {
+            font-size: 16px;
+        }
+        body {
+            font-size: 12px;
+        }
+
+        /*위 아래로 나란히 선언되면 body가 더 뒤에 나왔기 때문에 body font size를 따라가게 됨*/
+
+
+    em {
+        font-size: 1rem;
+    }
+
+    i {
+        font-size: 1em;
+    }
     </style>
 
 </head>

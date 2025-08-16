@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="parkour.css"
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="app-wrapper">
+        <div class="app-container">
+            <div class="content-wrapper">
+
+                <section id="map-page" class="page active">
+                    <header class="app-header">
+                        <h1>PARKOUR GO</h1>
+                        <span class="material-icons">search</span>
+                    </header>
+                    <main class="main-content">
+                        <div class="map-view">
+                            </div>
+                        <button class="fab-add-pin">+</button>
+                    </main>
+                </section>
+
+                <section id="my-page" class="page">
+                    <header class="page-header">
+                        <span class="material-icons">arrow_back_ios</span>
+                        <h2>마이 페이지</h2>
+                        <span class="material-icons" style="opacity: 0;"></span>
+                    </header>
+                    <main class="profile-content">
+                        <div class="profile-summary">
+                            <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Profile Picture" class="profile-pic">
+                            <h3>Tracer_Kim</h3>
+                            <p class="bio">"도시의 모든 장애물은 나의 놀이터!"</p>
+                        </div>
+                        <div class="profile-places">
+                            <h4>자주 가는 장소</h4>
+                            <div class="place-list-naver">
+                                <div class="place-item">
+                                    <img src="https://images.unsplash.com/photo-1579848737211-73693a1ad9a1?w=400" alt="Place">
+                                    <div class="place-info">
+                                        <h5>탄천 스케이트 파크</h5>
+                                        <span>경기 성남시 분당구</span>
+                                    </div>
+                                    <span class="material-icons">bookmark</span>
+                                </div>
+                                </div>
+                            <h4>저장한 장소</h4>
+                            </div>
+                    </main>
+                </section>
+
+                <section id="settings-page" class="page">
+                    <header class="page-header">
+                        <span class="material-icons">arrow_back_ios</span>
+                        <h2>설정</h2>
+                        <span class="material-icons" style="opacity: 0;"></span>
+                    </header>
+                    <ul class="settings-list">
+                        <li>
+                            <span>알림 설정</span>
+                            <span class="material-icons">arrow_forward_ios</span>
+                        </li>
+                        <li>
+                            <span>다크 모드</span>
+                            <div class="toggle-switch">
+                                <div class="toggle-handle"></div>
+                            </div>
+                        </li>
+                         <li>
+                            <span>난이도 설정</span>
+                            <span class="material-icons">arrow_forward_ios</span>
+                        </li>
+                        <li class="danger-zone">
+                            <span>회원 탈퇴</span>
+                        </li>
+                    </ul>
+                </section>
+                
+                <section id="difficulty-page" class="page">
+                    <header class="page-header">
+                        <span class="material-icons">arrow_back_ios</span>
+                        <h2>난이도 설정</h2>
+                        <span class="material-icons" style="opacity: 0;"></span>
+                    </header>
+                    <main class="difficulty-content">
+                        <p>자신의 실력과 비슷한 레벨을 선택해주세요.</p>
+                        <div class="silhouette-container">
+                            <div class="silhouette-choice selected">
+                                <img src="https://i.ibb.co/LdYyT9g/parkour-1.png" alt="Beginner">
+                                <span>입문</span>
+                            </div>
+                             <div class="silhouette-choice">
+                                <img src="https://i.ibb.co/3kMv3fX/parkour-2.png" alt="Intermediate">
+                                <span>중급</span>
+                            </div>
+                             <div class="silhouette-choice">
+                                <img src="https://i.ibb.co/L8BQNkF/parkour-3.png" alt="Advanced">
+                                <span>상급</span>
+                            </div>
+                        </div>
+                        <button class="cta-button">선택 완료</button>
+                    </main>
+                </section>
+
+            </div> <nav class="bottom-nav">
+                 <a href="#map-page" class="nav-item active">
+                    <span class="material-icons">map</span>
+                    <span>지도</span>
+                </a>
+                <a href="#my-page" class="nav-item">
+                    <span class="material-icons">account_circle</span>
+                    <span>마이</span>
+                </a>
+                <a href="#" class="nav-item record-btn">
+                    <span class="material-icons">play_arrow</span>
+                </a>
+                <a href="#explore-page" class="nav-item">
+                    <span class="material-icons">explore</span>
+                    <span>탐색</span>
+                </a>
+                <a href="#settings-page" class="nav-item">
+                    <span class="material-icons">settings</span>
+                    <span>설정</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+</body>
+</html>

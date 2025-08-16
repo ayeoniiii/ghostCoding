@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card layout Example</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/card.css">
+</head>
+
+<body>
+    <h1>Card Layout</h1>
+    <section class="card-container horizon-box">
+        
+        <div class="thumbs">
+            <!--첫 번째 박스-->
+            <img src="./images/card_thumb_0.jpg" alt="space sea">
+            </div>
+
+            <div class="contents">
+            <q>
+                A line of code can create a whole new world, start now!
+            </q>
+
+            <p>
+                At first, coding seemed so hard, but it's really just like stackin small blocks. <em>Making mistakes is okay</em>.it's the start of learning!
+            </p>
+
+
+            <div class="writer">
+                <img src="./images/profile_0.jpg" alt="camel">
+
+            <strong class="user">created by dedblangica</strong>
+            <span class="created">3minutes ago</span>
+            </div>
+        </div>
+    </section>
+
+
+    <button type="button" id="change-btn">모드바꾸기</button>
+    
+    <script>
+        const cardbox = document.querySelector('.card-container');
+        const btn = document.getElementById('change-btn');
+        btn.addEventListener('click',() => {
+            cardbox.classList.toggle('horizon-box')
+            let status = cardbox.classList.contains('horizon-box'); console.log('현재 상태는 :', status, '입니다.')
+            if (status) {btn.textContent = '세로모드 보기' } else {btn.textContent = '가로모드 보기'}
+            }
+        )
+     
+    </script>
+</body>
+
+</html>
