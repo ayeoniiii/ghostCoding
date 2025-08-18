@@ -57,30 +57,31 @@ strong {
 }
 
 .tag_container {
+    display: flex;
+    flex-wrap: wrap;
     border-radius: 0 0 12px 12px;
     padding: 12px 16px 16px 16px;
     gap: 8px;
-    display: flex;
-    flex-wrap: wrap;
     margin: 0;
+    list-style: none;
 }
 
 .tag_container li { 
     width: max-content;
-    height: auto;
-    flex: auto;
+    display: flex;
     align-items: center;
     gap: 10px;
-    padding: 0 16px;
+    padding: 4px 16px;
     font-size: 12px;
     background-color: #A1A1A1;
     border-radius: 28px;
     border: 1px solid white;
-    text-decoration: none;
     list-style: none;
+    text-decoration: none;
 }
 
 .tag_container li:hover {
+    text-decoration: none;
     color: #fff;
     background-color: white;
 }
