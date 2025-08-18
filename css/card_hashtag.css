@@ -77,11 +77,15 @@ strong {
     border-radius: 28px;
     border: 1px solid white;
     list-style: none;
-    text-decoration: none;
 }
 
 .tag_container li:hover {
     text-decoration: none;
     color: #fff;
     background-color: white;
+}
+
+a {
+    text-decoration: none;
+    color: white;
 }
