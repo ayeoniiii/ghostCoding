@@ -13,10 +13,8 @@ body {
 
 .card-container {
     width: 240px;
-    height: auto;
     display: block;
     flex-direction: auto;
-    overflow:hidden;
     border-radius: 12px;
 }
 
@@ -26,7 +24,6 @@ body {
     height: auto;
     display: block;
     flex-direction: column;
-    outline: auto;
     background-color: #488ADA;
 }
 
@@ -36,7 +33,6 @@ body {
     padding: 16px;
     background-color: white;
     margin-bottom: 10px;
-    outline: auto;
     font-size: 10px;
 }
 
