@@ -1,0 +1,82 @@
+@charset "utf-8";
+
+body {
+    background-color: #e5e5e5;
+    display: flex;
+    flex: auto; 
+    justify-content: center;     
+    align-items: center;                
+    font-family: sans-serif;
+}
+
+.card-container img {
+    width: 240px;
+    height: auto;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0 ;
+    align-items: center;
+    outline: auto;
+    background-color: #488ADA;
+}
+
+.contents {
+    width: 240px;
+    height: auto;
+    padding: 16px;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    margin-bottom: 10px;
+    outline: auto;
+    font-size: 10px;
+}
+
+
+strong {
+    font-size: 14px;
+    color: #488ADA;
+    display: block;
+    padding-bottom: 15px;
+
+}
+
+.contents p {
+    font-size: 10px;
+    color: #444;
+    line-height: 1.4;
+    margin: 0;
+    padding-bottom: 15px;
+}
+
+.tag_container {
+    border-radius: 0 0 12px 12px;
+    padding: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 16px 16px 16px;
+    margin: 0;
+    list-style: none;
+}
+
+.tag-container li { 
+    border: 28px;
+    width: max-content;
+    height: auto;
+    flex: auto;
+    align-items: center;
+    gap: 10px;
+    padding: 0 16px;
+    font-size: 12px;
+    border-radius: 28px;
+    border: 1px;
+    background-color: #A1A1A1;
+    text-decoration: none;
+}
+
+.tag_container li:hover {
+    color: #fff;
+}

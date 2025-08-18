@@ -147,3 +147,7 @@ h1 {
     padding: 0 20px;
     display: block;
 }
+
+#change-btn:hover {
+    background: #4a8bc2;
+}
