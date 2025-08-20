@@ -140,7 +140,7 @@ margin-top: 20px;
     line-height: 16px;
     border-radius: 10px;
     padding: 35px;
-    margin: 0 auto;
+    margin: 50px auto;
     background: #4e21b8;
     background: linear-gradient(90deg, rgba(78, 33, 184, 1) 0%, rgba(9, 9, 121, 1) 51%, rgba(0, 0, 0, 1) 100%);
         }
@@ -148,7 +148,7 @@ margin-top: 20px;
 
 .price:hover {
     transition: 0.5s;
-    scale: 1.1;
+    scale: 1.05;
     background-color: rgb(255, 255, 255,0.3);
 }
 
