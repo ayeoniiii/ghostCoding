@@ -4,14 +4,17 @@ body {
   font-size: 14px;
   font-family: sans-serif;
   background-color: beige;
+  margin: 50px auto;
+
 }
 
 .card-container {
   width: 100%;
   max-width: 360px;
   margin: 0 auto;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid;
   border-radius: 12px;
+  /*position: relative; 자기 자신을 기준으로 함*/
 }
 
 .card-container .thumb {
@@ -19,6 +22,7 @@ body {
   height: 200px;
   overflow: hidden;
   border-radius: 12px 12px 0 0;
+  position: relative;
 }
 
 .card-container .thumb img {
@@ -27,10 +31,33 @@ body {
   object-fit: cover;
 }
 
+.card-container .dimm {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left:0;
+    top:0;
+    background-color: rgb(0,0,0,0.3);
+}
+
 .card-container .contents {
   background-color: #fff;
   padding: 12px;
   border-radius: 0 0 12px 12px;
+  position: relative;
+}
+
+.card-container .contents .profile {
+  border-radius: 99px;
+  border: 3px solid lightgreen;
+  width: 52px;
+  height: 52px;
+  position: absolute;
+  right: 30px;
+  top: 0px;
+  translate: 0 -50%;
+  transition: 0.5s;
+  background-color: lightcoral;
 }
 
 .card-container .contents strong {
@@ -45,28 +72,69 @@ body {
 
 .card-container .tag-container {
   display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   gap: 8px;
   font-size: 0.8em;
 }
 
 .card-container .tag-container a {
-  display: flex;
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: lightslategrey;
   height: 24px;
   padding: 0 12px;
   border-radius: 30px;
   align-items: center;
+  display: flex;
 }
 
 .card-container .tag-container a:hover {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: lightpink;
 }
+
 .card-container .tag-container a::before {
   content: "#";
   margin: 0 4px 0 0;
 }
 
+body {
+  height: 2000px;
+}
+.btn_top {
+  background-color: tomato;
+  position: fixed; /*floating 버튼*/
+  right: 30px;
+  bottom: 30px;
+}
 
+.dimm {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom:0;
+/*상하좌우 다 0으로 주는 방법 개발자가 많이 사용함*/
+  inset: 0 0 0 0 /*offset 한번에 주고 싶을 때. 상 우 하 좌*/
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0,0,0,0.3);
+  
+}
+
+
+.modal {
+  z-index: 101;
+  border-radius: 20px;
+  padding: 20px;
+  width: 300px;
+  height: 300px;
+  position: fixed;
+  background-color: gold;
+  left: 50%;
+  top: 50%;
+  /*inset: 50% auto auto 50%;*/
+  translate: -50% -50%;
+
+}
 /*body {
     background-color: #e5e5e5;
     display: flex;
