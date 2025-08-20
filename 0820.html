@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Before, After</title>
+
+    <style>
+
+        body {
+            background-color: #f3f3f3;
+    
+        }
+
+        .container {
+            width: 400px;
+            height: 600px;
+            margin: 50px auto;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+
+        }
+
+        .line-container {
+            /*outline: 1px solid red;*/
+            text-align: center;
+            position: relative;
+        }
+
+        .line-container::before, 
+        .line-container::after {
+            content:''; /*디자인 용도로 쓸 때는 content 비움*/
+            width: 50%;
+            height: 1px;
+            background-color: tomato;
+            display: block;
+            position: absolute;
+            top: 50%;
+            translate: 0 -50% ;
+            
+        }
+
+        .line-container::before {
+            left: 8px;
+
+        }
+
+        .line-container::after {
+            right: 8px;
+        }
+
+        .line-container strong {
+            background-color: #fff;
+            padding: 0 10px;
+            position: relative; /*position 가지는 순간 z-index 생김*/
+            z-index: 10; /*10번째 순번, 카드 쌓듯이! modal 관련은 99이상, 아래는 dimm*/
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="line-container">
+            <strong>또는</strong>
+        </div>
+    </div>
+
+</body>
+</html>
+
+- 홈페이지에 크게 보이는 부분 - 비주얼 섹션
+- <article class="contents nowContents">
+- <article class="contents reason-Contents">
+
+</article>
+</article>
