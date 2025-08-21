@@ -254,7 +254,6 @@ article.price:hover {
 .content-container li a {
     position: relative;
     width: 185px;
-    height: 270px;
     object-fit: cover;
     display: block;
 }

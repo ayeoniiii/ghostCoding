@@ -13,14 +13,6 @@ div.search-wrapper {
     box-shadow: 3px 10px 10px rgb(0,0,0,0.2);
 }
 
-fieldset img {
-    position: absolute;
-    top: 28px;
-    left: 35px;
-    width: 20px;
-    height: 20px;
-}
-
 .advanced {
     position: absolute;
     bottom: 10px;
@@ -40,6 +32,10 @@ input {
     padding: 10px 10px 10px 35px;
     width: 250px;
     margin-bottom: 10px;
+    background-image: url('../images/icons/search.svg');
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: 10px center; /*좌-우 상-하*/
 }
 
 button {
