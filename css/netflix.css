@@ -243,10 +243,6 @@ article.price:hover {
     flex-shrink: 0;
 }
 
-.logo-overlay {
-    width: 300px;
-    height: 10px;
-}
 
 /* 5. 포스터 이미지 스타일 */
 .content-container li img {
