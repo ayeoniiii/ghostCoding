@@ -166,7 +166,7 @@ article.price {
     box-sizing: border-box; /*패딩이 너비에 포함되도록 설정*/
     background: #4e21b8;
     background: linear-gradient(90deg, rgba(78, 33, 184, 0.5) 0%, rgba(9, 9, 121, 0.5) 51%, rgba(0, 0, 0, 0.5) 100%);
-    transition: scale 0.4s ease-in-out, background 0.6s ease-in-out;
+    transition: scale 0.4s ease-in;
     }
 
 article.price:hover {
@@ -229,6 +229,7 @@ article.price:hover {
     overflow-x: auto;
     overflow-y: hidden;
     scrollbar-width: none;
+    gap: 20px;
 }
 
 .content-container ul::-webkit-scrollbar {
@@ -238,7 +239,6 @@ article.price:hover {
 
 /* 4. 개별 포스터(li) - 숫자 위치의 기준점 역할 */
 .content-container li {
-    position: relative; /* ★★★ 숫자 위치의 기준점! 이게 있어야 숫자가 따라다닙니다 ★★★ */
     margin-right: 10px;
     flex-shrink: 0;
 }
@@ -246,24 +246,30 @@ article.price:hover {
 
 /* 5. 포스터 이미지 스타일 */
 .content-container li img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.content-container li a {
+    position: relative;
     width: 185px;
     height: 270px;
-    border-radius: 10px;
+    object-fit: cover;
     display: block;
-    margin: 15px;
 }
 
 /* 6. 숫자 스타일 */
 .content-container li span {
     position: absolute;
     bottom: -15px;
-    left: 8px;
+    left: -18px;
     z-index: 10; /* 이미지가 숫자를 가리지 않도록 숫자를 위로 올림 */
     
-    font-size: 8rem;
+    font-size: 8.5rem;
     font-weight: 900;
     color: #000;
-    -webkit-text-stroke: 4px #fff;
+    -webkit-text-stroke: 5px #fff;
 }
 
 
