@@ -1,0 +1,53 @@
+@charset "utf-8";
+
+body {
+    background-color: khaki;
+}
+
+article {
+    font-family: poppins, sans-serif;
+    margin: 70px auto;
+    padding: 30px 40px;
+    flex:auto;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid f3f3f3;
+    background-color: #f3f3f3;
+    border-radius: 20px;
+    width: 500px;
+    position: relative;
+}
+
+.image img {
+    width: 300px;
+    border-radius: 200px;
+    border: 10px dotted chocolate;
+}
+
+.image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+b {
+    text-decoration: none;
+    text-shadow: 1px 1px 5px yellowgreen;
+    font-weight: 500;
+}
+
+
+.triangle {
+    position: absolute;
+    bottom: -50px;
+    left: 300px;
+    width: 0;
+    height: 0;
+
+  /* 위쪽 테두리를 이용해 삼각형 모양을 만듦 */
+  border-top: 50px solid #f3f3f3; 
+
+  /* 나머지 좌우 테두리는 투명하게 만들어 숨김 */
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+}
