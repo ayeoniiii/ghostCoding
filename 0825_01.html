@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .terms-container {
+            height: 150px;
+            border: 1px solid red;
+            width: 100%;
+            max-width: 250px;
+            padding: 10px;
+            border-radius: 12px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .terms-container p {    
+            line-height: 1;
+            font-size: 12px;
+            text-align: justify;
+
+        }
+    </style>
+</head>
+<body>
+    <select>
+        <option value="ko">한국어</option>
+        <option value="En">English</option>
+        <option value="ja">日本語</option>
+    </select>
+
+    <select>
+        <option>2000</option>
+        <option>2001</option>
+        <option>2002</option>
+        <option>2003</option>
+        <option>2004</option>
+    </select>
+
+    <select name="">
+        <optgroup label="서울특별시">
+            <option>구로구</option>
+            <option>강서구</option>
+            <option>강남구</option>
+        </optgroup>
+
+        <optgroup label="부산시">
+            <option>사하구</option>
+            <option>동구</option>
+            <option>서구</option>
+        </optgroup>
+    </select>
+
+<div class="terms-container">
+    <h3>다양한 네이버 서비스를 즐겨보세요.</h3>
+   <p>네이버는 <a href="http://naver.com"
+    target="_blank">
+    www.naver.com</a>
+</p>
+<p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt error vero recusandae, aspernatur dolorem deleniti repellendus, quidem quia ex impedit placeat unde cupiditate? Harum aliquam veniam nisi quam iusto tempora?
+</p>
+
+</div>
+
+    <div class="phone-check">
+        <input type="email" required
+        placeholder="aaa@gmail.com">
+        <button type="button" disabled>인증요청</button>
+
+        <hr>
+
+        <input type="text" placeholder="인증번호 6자리" disabled>
+    </div>
+
+        
+
+    <label for="disk_c">Disk usage C:</label>
+<meter id="disk_c" value="2" min="0" max="10">2 out of 10</meter><br>
+
+<label for="disk_d">Disk usage D:</label>
+<meter id="disk_d" value="0.6">60%</meter>
+
+
+</body>
+</html>
