@@ -1,0 +1,266 @@
+@charset "utf-8";
+
+:root {
+  --primary: #d81e27;
+  --title: 56px;
+  --description: 20px;
+  --radius-s: 0.24rem;
+  --radius-m: 0.5rem;
+  --radius-l: 1rem;
+  --grd-type-a: linear-gradient(91deg, #261733, #151a3f);
+  --grd-type-a-hover: linear-gradient(91deg, #482566 0%, #161d52 99.51%);
+  --max-w: 1414px;
+}
+
+body {
+  background: #000 url("../images/full_bg_h2.jpg") no-repeat center top/100%
+    auto;
+  color: #fff;
+  font-family: sans-serif;
+  padding-bottom: 300px;
+}
+
+.page-header {
+  background-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(46, 22, 28, 0) 100%
+  );
+}
+.page-header .inner {
+  width: 100%;
+  max-width: 1290px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  height: 88px;
+  align-items: center;
+  padding: 0 1.25rem;
+}
+.page-header h1 {
+  width: 148px;
+}
+
+.acc-nav {
+  display: flex;
+  gap: 12px;
+}
+
+.acc-nav select,
+.acc-nav button {
+  height: 32px;
+  border-radius: 8px;
+  padding: 0 36px;
+  min-width: 124px;
+  font-size: 1rem;
+}
+.acc-nav select {
+  border: 1px solid #fff;
+  padding-left: 30px;
+  background: url("../images/netflix_lang.svg") no-repeat 12px center/20px auto;
+}
+
+.acc-nav button {
+  background-color: var(--primary);
+}
+
+.onboarding {
+  width: 100%;
+  max-width: 600px;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.onboarding h2 {
+  font-size: var(--title);
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.onboarding p {
+  font-size: var(--description);
+  margin-bottom: 1rem;
+}
+
+.input-container {
+  height: 56px;
+  display: flex;
+  gap: 8px;
+  margin-top: 1rem;
+}
+
+.input-container input,
+.input-container button {
+  border-radius: 8px;
+  padding: 0 1.25rem;
+}
+
+.input-container input {
+  flex-grow: 1; 
+}
+.input-container button {
+  background-color: var(--primary);
+  font-size: 1.25rem;
+}
+/* main */
+.page-main {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  outline: 1px solid red;
+}
+
+.banner-discount {
+  border-radius: var(--radius-l);
+  background-image: var(--grd-type-a);
+  padding: 1.25rem;
+
+  position: relative;
+  transition: 0.7s;
+  overflow: hidden;
+}
+
+.banner-discount::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 0;
+  background-image: var(--grd-type-a-hover);
+  opacity: 0;
+  transition: opacity 0.5s;
+  z-index: -1;
+}
+
+.banner-discount::after {
+  content: "aa";
+}
+
+.banner-discount:hover {
+  scale: 1.05;
+}
+
+.banner-discount:hover::before {
+  opacity: 1;
+}
+
+.banner-discount h3 {
+  font-size: 1.25rem;
+}
+
+.banner-discount h3 em {
+  font-weight: 600;
+}
+
+.banner-discount a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-s);
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 0.5rem 1.5rem;
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  translate: 0 -50%;
+  transition: 0.4s;
+}
+
+.banner-discount a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.page-main {
+  width: 100%;
+  max-width: 1200px;
+}
+/* 지금뜨는 컨텐츠 */
+.page-main .contents {
+  margin: 2rem 0;
+}
+
+.page-main .contents h3 {
+  font-size: 24px;
+  margin-bottom: 1rem;
+}
+
+.now-container ol {
+  display: flex;
+  gap: 22px;
+  overflow: auto;
+}
+
+.now-container header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.now-container .pager-container {
+  display: flex;
+  gap: 20px;
+}
+
+.now-container .pager-container button.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.now-container li {
+  width: 200px;
+  height: 252px;
+  flex-shrink: 0;
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.now-container li a {
+  border-radius: var(--radius-m);
+  overflow: hidden;
+  display: block;
+  height: 100%;
+}
+
+.now-container li img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.now-container .num {
+  position: absolute;
+  font-size: 100px;
+  color: #000;
+  -webkit-text-fill-color: #000;
+  -webkit-text-stroke: 4px #fff;
+  text-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.5);
+  inset: auto auto 0 0;
+  font-weight: 900;
+}
+
+.now-container .num::before {
+  content: attr(data-rank);
+  -webkit-text-fill-color: rgb(0, 0, 0);
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+  position: absolute;
+  inset: 0 auto auto 0;
+}
+
+.reason-container ul {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.reason-container li {
+  width: calc((100% - 36px) / 4);
+  height: 200px;
+  outline: 1px solid gold;
+  background: url("../images/icons/sns_facebook.png") no-repeat right 10px
+    bottom 15px/40px auto;
+}
