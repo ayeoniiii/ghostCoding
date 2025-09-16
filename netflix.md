@@ -8,5 +8,10 @@
 6. CSS 시작
 
 
+
 <input type="email" placeholder="이메일주소" required>
 <button type="submit">시작하기</button>
+
+<h1>portpolio
+
+<input type="text" name="name" value="솔" required>
