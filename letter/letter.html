@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>My Letter - Home Screen (Cosmos Journey Applied)</title>
+    <style>
+        /* =========================================
+           [1. Global & Layout]
+           ========================================= */
+        :root {
+            --primary-color: #FF6B6B;
+            --bg-color: #F9F9F9;
+            --text-color: #333;
+            --gray-text: #888;
+        }
+        body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #e0e0e0; display: flex; justify-content: center; height: 100vh; overflow: hidden; }
+        
+        .app-container {
+            width: 100%; max-width: 420px; height: 100%; background: var(--bg-color); position: relative; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .content-area {
+            flex: 1; overflow-y: auto; scroll-behavior: smooth;
+            -ms-overflow-style: none; scrollbar-width: none;
+            display: flex; flex-direction: column;
+            position: relative;
+        }
+        .content-area::-webkit-scrollbar { display: none; }
+
+        .screen { display: none; flex-direction: column; min-height: 100%; background: var(--bg-color); box-sizing: border-box; }
+        .screen.active { display: flex; }
+        
+        /* 공통 버튼 */
+        .btn-area { margin-top: auto; padding: 20px 24px; background: white; border-top: 1px solid #f5f5f5; z-index: 10; position: relative; }
+        .btn { width: 100%; padding: 16px; border-radius: 12px; border: none; background: var(--primary-color); color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        
+        /* 박스 캐릭터 (CSS Drawing) */
+        .box-char { width: 50px; height: 60px; background: #E0C097; border-radius: 4px; position: relative; border: 2px solid #333; display: inline-block; }
+        .box-char::before { content: ''; position: absolute; top: 20px; left: 12px; width: 6px; height: 6px; background: #333; border-radius: 50%; box-shadow: 20px 0 0 #333; }
+        .box-char::after { content: ''; position: absolute; top: 32px; left: 22px; width: 8px; height: 4px; border-bottom: 2px solid #333; border-radius: 50%; }
+
+        /* =========================================
+           [2. Home Screen Styles]
+           ========================================= */
+        .home-header { background: white; padding: 30px 24px 25px; border-bottom-left-radius: 24px; border-bottom-right-radius: 24px; box-shadow: 0 0 20px rgba(0,0,0,0.03); margin-bottom: 20px; }
+        
+        /* 홈 상단 레이아웃 (질문 + 프로필) */
+        .home-top-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+        .q-title { font-size: 20px; font-weight: 800; line-height: 1.4; color: #111; flex: 1; padding-right: 15px; }
+        .profile-btn { width: 36px; height: 36px; background: #f0f0f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; border: 1px solid #eee; }
+
+        .timer-wrap { display: flex; align-items: center; margin-bottom: 25px; position: relative; cursor: pointer; }
+        .q-timer { font-size: 13px; color: #FF6B6B; font-weight: 700; }
+        .info-icon { margin-left: 6px; color: #ccc; font-size: 14px; }
+        .tooltip { position: absolute; top: 25px; left: 0; background: #333; color: white; padding: 8px 12px; border-radius: 6px; font-size: 11px; display: none; z-index: 100; white-space: nowrap; }
+        
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .action-card { background: #666; border-radius: 16px; padding: 20px; height: 140px; position: relative; color: white; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
+        .action-card.secondary { background: #888; }
+        .ac-label { font-size: 16px; font-weight: 700; z-index: 2; }
+        .ac-img { position: absolute; bottom: -10px; right: -5px; transform: scale(0.8); }
+
+        /* [Gamification/Stats styles] */
+        .stats-card { 
+            background: white; 
+            border-radius: 16px; 
+            padding: 20px; 
+            margin: 0 24px 20px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03); 
+        }
+        .stats-row { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start; 
+            margin-bottom: 15px; 
+        }
+        .stats-info { 
+            font-size: 14px; 
+            line-height: 1.7; 
+            color: var(--text-color); 
+        }
+        .stats-info b { 
+            font-weight: 800; 
+            color: var(--primary-color); 
+        }
+        .stats-icon { 
+            font-size: 40px; 
+            color: #ccc; 
+        }
+        .gamification-text { 
+            font-size: 14px; 
+            color: #555; 
+            line-height: 1.6; 
+            border-top: 1px solid #eee; 
+            padding-top: 15px; 
+            margin-top: 15px; 
+        }
+        .gamification-text b { 
+            font-weight: 700; 
+            color: #00BCD4; 
+        }
+        .gamification-text i { /* 남은 편지 수 강조 */
+            font-style: normal;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+        
+        /* 공개 편지 섹션 */
+        .section-header { padding: 0 24px; display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 12px; }
+        .section-title { font-size: 16px; font-weight: 700; color: #333; }
+        .header-action { font-size: 14px; color: var(--primary-color); font-weight: 600; cursor: pointer; }
+        .horizontal-scroll { display: flex; gap: 12px; overflow-x: auto; padding: 0 24px 20px; -ms-overflow-style: none; scrollbar-width: none; }
+        .horizontal-scroll::-webkit-scrollbar { display: none; }
+        .public-card-home { min-width: 150px; height: 160px; padding: 20px; border-radius: 16px; box-sizing: border-box; display: flex; flex-direction: column; cursor: pointer; flex-shrink: 0; background: white; border: 1px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+        .pch-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; color: #333; line-height: 1.4; }
+        .pch-desc { font-size: 12px; color: #888; line-height: 1.5; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; }
+
+
+        /* =========================================
+           [3. Navigation]
+           ========================================= */
+        .bottom-nav { height: 60px; background: white; border-top: 1px solid #eee; display: flex; justify-content: space-around; align-items: center; flex-shrink: 0; z-index: 100; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 25%; height: 100%; cursor: pointer; color: #ccc; }
+        .nav-item.active { color: var(--primary-color); }
+        .nav-label { font-size: 10px; margin-top: 4px; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="content-area">
+
+        <div id="screen-home" class="screen active">
+            <div class="home-header">
+                <div class="home-top-row">
+                    <div class="q-title">당신의 인생에 가장 큰 영감을<br>주는 사람은 누구인가요?</div>
+                    <div class="profile-btn" onclick="alert('마이페이지/설정 화면으로 이동')">👤</div>
+                </div>
+                
+                <div class="timer-wrap" onclick="toggleTooltip()">
+                    <span class="q-timer" id="home-timer">13시간 32분 후에 질문이 사라져요</span>
+                    <span class="info-icon">ⓘ</span>
+                    <div class="tooltip" id="timer-tooltip">질문은 매일 자정(00:00)에 변경됩니다.</div>
+                </div>
+
+                <div class="action-grid">
+                    <div class="action-card" onclick="alert('타인에게 편지 작성 시작')">
+                        <div class="ac-label">타인에게<br>보내는 편지</div>
+                        <div class="box-char ac-img"></div>
+                    </div>
+                    <div class="action-card secondary" onclick="alert('나에게 편지 작성 시작')">
+                        <div class="ac-label">나에게<br>보내는 편지</div>
+                        <div class="box-char ac-img" style="background:#ccc;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stats-row">
+                    <div class="stats-info">
+                        <div style="font-size:16px; font-weight:700; margin-bottom:5px;">나만의 우주 여정</div>
+                        내가 보낸 편지 <b id="sent-count">0통</b><br>
+                        내가 받은 편지 <b id="received-count">0통</b>
+                    </div>
+                    <div class="stats-icon">🚀</div>
+                </div>
+                <div class="gamification-text" id="gamification-text">
+                     </div>
+            </div>
+
+            <div class="section-header">
+                <div class="section-title">공개 편지</div>
+                <div class="header-action" onclick="alert('공개 편지 전체 리스트로 이동')">전체보기 ></div>
+            </div>
+            <div class="horizontal-scroll">
+                <div class="public-card-home" onclick="alert('공개 편지 읽기')"><div class="pch-title">이지영 선생님</div><div class="pch-desc">나에게 가장 큰 영감...</div></div>
+                <div class="public-card-home" onclick="alert('공개 편지 읽기')"><div class="pch-title">우리 아빠</div><div class="pch-desc">바로바로 우리 아빠다...</div></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bottom-nav" id="main-nav">
+        <div class="nav-item active" onclick="alert('홈으로 이동')"><div>🏠</div><div class="nav-label">홈</div></div>
+        <div class="nav-item" onclick="alert('편지함으로 이동')"><div>📮</div><div class="nav-label">편지함</div></div>
+        <div class="nav-item" onclick="alert('리포트로 이동')"><div>📊</div><div class="nav-label">리포트</div></div>
+        <div class="nav-item" onclick="alert('설정(마이페이지)으로 이동')"><div>⚙️</div><div class="nav-label">설정</div></div>
+    </div>
+
+</div>
+
+<script>
+    // --- Gamification Data (확장된 우주 여정) ---
+    const GAMIFICATION_MILESTONES = [
+        // 0~4통: 달 궤도
+        { count: 0, text: "조심스러운 마음을 안고, **달(The Moon)** 궤도를 돌고 있어요.", next_step: "수성(Mercury)", next_required: 5 },
+        // 5~9통: 수성 근처
+        { count: 5, text: "태양에 가장 가까운 **수성(Mercury)** 궤도에서 마음 여행을 이어가고 있어요.", next_step: "금성(Venus)", next_required: 10 },
+        // 10~19통: 금성 근처
+        { count: 10, text: "새벽별처럼 빛나는 **금성(Venus)**의 아침노을을 따라 당신의 편지에 응원을 보내요.", next_step: "지구(Earth)", next_required: 20 },
+        // 20~49통: 지구 근처
+        { count: 20, text: "생명과 안식의 **지구(Earth)** 궤도에 도착해 잠시 숨을 고르고 있어요.", next_step: "화성(Mars)", next_required: 50 },
+        // 50~99통: 화성 근처
+        { count: 50, text: "미래를 품은 붉은 행성, **화성(Mars)**의 대지를 탐험하며 당신의 깊이를 더하고 있어요.", next_step: "목성(Jupiter)", next_required: 100 },
+        // 100~199통: 목성 근처
+        { count: 100, text: "태양계의 왕, **목성(Jupiter)**의 거대한 고리를 항해하며 은은한 울림을 만들어내고 있어요.", next_step: "토성(Saturn)", next_required: 200 },
+        // 200~299통: 토성 근처
+        { count: 200, text: "가장 신비로운 **토성(Saturn)** 고리의 끝에 닿았습니다. 드넓은 은하를 응시하고 있어요.", next_step: "시리우스(Sirius)", next_required: 300 },
+        // 300통 이상: 시리우스
+        { count: 300, text: "🌌 당신은 이제 밤하늘에서 가장 빛나는 별, **시리우스(Sirius)**처럼 스스로 빛나는 은하계 여행자예요.", next_step: null, next_required: null }
+    ];
+
+    // --- Gamification Logic ---
+    function updateGamificationText(sentCount) {
+        const statsEl = document.getElementById('gamification-text');
+        
+        let currentMilestone = GAMIFICATION_MILESTONES[0];
+        for (const m of GAMIFICATION_MILESTONES) {
+            if (sentCount >= m.count) {
+                currentMilestone = m;
+            }
+        }
+
+        let fullText = currentMilestone.text;
+        
+        if (currentMilestone.next_required !== null) {
+            const lettersToNext = currentMilestone.next_required - sentCount;
+            fullText += `<br><br><i>${lettersToNext}통</i>의 마음을 더 보내면 **${currentMilestone.next_step}**에 닿을 수 있어요.`;
+        }
+
+        statsEl.innerHTML = fullText;
+        
+        // Mock Data for counters
+        document.getElementById('sent-count').innerText = sentCount + '통';
+        document.getElementById('received-count').innerText = (sentCount > 4 ? sentCount - 4 : 0) + '통';
+    }
+
+    // --- Tooltip Logic ---
+    function toggleTooltip() {
+        const t = document.getElementById('timer-tooltip');
+        t.style.display = t.style.display === 'block' ? 'none' : 'block';
+        setTimeout(() => { t.style.display = 'none'; }, 3000);
+    }
+
+    // --- Timer Simulation ---
+    let sec = 13 * 3600 + 32;
+    function startTimer() {
+        setInterval(() => {
+            if(sec > 0) sec--;
+            const h = Math.floor(sec / 3600);
+            const m = Math.floor((sec % 3600) / 60);
+            document.getElementById('home-timer').innerText = `${h}시간 ${m}분 후에 질문이 사라져요`;
+        }, 1000);
+    }
+    
+    // --- Initialization ---
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('screen-home').classList.add('active');
+        startTimer();
+        
+        // Mock Data: 현재 보낸 편지 수 12통을 기준으로 우주 여정 상태를 표시합니다.
+        // 이 값만 변경하면 랜드마크가 바뀝니다. (예: 250통으로 변경 시 '토성' 단계 표시)
+        updateGamificationText(12);
+    });
+</script>
+
+</body>
+</html>

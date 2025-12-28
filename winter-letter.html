@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winter Letter</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & ReactDOM CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel CDN (for JSX) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFCFB;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }
+        .snowflake { position: absolute; width: 3px; height: 3px; background: white; border-radius: 50%; opacity: 0.8; top: -10px; animation: fall linear infinite; filter: blur(0.5px); }
+        @keyframes fall { to { transform: translateY(100vh) translateX(30px); } }
+        
+        .paper-texture { background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png"); }
+        .mailbox-float { animation: mailbox-float 6s ease-in-out infinite; }
+        @keyframes mailbox-float { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-12px) rotate(1deg); } }
+        @keyframes flag-wiggle { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-15deg); } }
+
+        .carousel-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            padding: 20px 60px; 
+            gap: 24px;
+            height: 360px;
+            align-items: center;
+            -webkit-overflow-scrolling: touch;
+        }
+        .carousel-container::-webkit-scrollbar { display: none; }
+        .carousel-item { 
+            scroll-snap-align: center; 
+            flex: 0 0 auto; 
+            transform-origin: center center;
+            transition: all 0.3s ease;
+        }
+
+        .scale-up {
+            animation: scaleUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        @keyframes scaleUp {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // 아이콘 컴포넌트 래퍼 (Lucide 사용)
+        const Icon = ({ name, size = 24, className = "", fill = "none" }) => {
+            useEffect(() => {
+                lucide.createIcons();
+            }, [name]);
+            return <i data-lucide={name} style={{ width: size, height: size }} className={className} stroke={fill !== "none" ? "currentColor" : undefined}></i>;
+        };
+
+        const App = () => {
+            const [view, setView] = useState('landing'); 
+            const [isMailboxOpen, setIsMailboxOpen] = useState(false);
+            const [showMembershipModal, setShowMembershipModal] = useState(false);
+            const [selectedLetter, setSelectedLetter] = useState(null);
+            
+            const [receivedLetters, setReceivedLetters] = useState([
+                { id: 1, sender: "지민", moodTag: "사랑을 담아서", hint: "작년 축제 때 너랑 사진 찍은 사람", content: "올해 정말 고생 많았어! 우리 내년에도 더 즐겁게 보내자.", song: { title: "Snowman", artist: "Sia", color: "#FFB5B5" } },
+                { id: 2, sender: "수현", moodTag: "취업 성공을 담아서", hint: "노래방 가면 항상 버즈 노래 부르던...", content: "눈 오는 날엔 항상 네 생각이 나. 네가 준비하는 일 다 잘 될 거야!", song: { title: "Christmas Tree", artist: "V", color: "#AEC6CF" } },
+                { id: 3, sender: "익명", moodTag: "새해 대운을 담아서", hint: "도서관 3층에서 너 자주 보던 사람", content: "말하지 못했지만 항상 고마웠어. 2026년에는 네가 원하는 모든 게 이뤄지길.", song: { title: "첫 눈", artist: "EXO", color: "#CFCABC" } },
+            ]);
+
+            const [newLetter, setNewLetter] = useState({
+                receiver: "세이",
+                sender: "",
+                moodTag: "사랑을 담아서",
+                hint: "",
+                content: "",
+                song: null,
+            });
+
+            const navigateTo = (nextView) => setView(nextView);
+
+            const handleSendLetter = (letterData) => {
+                const letterToAdd = { ...letterData, id: receivedLetters.length + 1 };
+                setReceivedLetters([...receivedLetters, letterToAdd]);
+                navigateTo('success');
+            };
+
+            const handleCreateMailboxStart = () => setShowMembershipModal(true);
+
+            return (
+                <div className="min-h-screen flex flex-col items-center justify-center p-4 relative antialiased overflow-hidden">
+                    {/* 눈 효과 */}
+                    <div className="snow-container">
+                        {[...Array(80)].map((_, i) => (
+                            <div key={i} className="snowflake" style={{
+                                left: `${Math.random() * 100}%`,
+                                animationDuration: `${Math.random() * 10 + 7}s`,
+                                animationDelay: `${Math.random() * 5}s`,
+                                width: `${Math.random() * 3 + 1}px`,
+                                height: `${Math.random() * 3 + 1}px`,
+                                opacity: Math.random() * 0.5 + 0.3
+                            }}></div>
+                        ))}
+                    </div>
+
+                    <div className="w-full max-w-md h-[800px] bg-white rounded-[2.5rem] border border-slate-100 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)] overflow-hidden relative flex flex-col z-10">
+                        {/* 상단 바 */}
+                        <div className="h-6 w-full flex justify-center items-center gap-1.5 pt-4 z-20">
+                            <div className="w-1.5 h-1.5 rounded-full bg-slate-200"></div>
+                            <div className="w-12 h-1.5 rounded-full bg-slate-200"></div>
+                            <div className="w-1.5 h-1.5 rounded-full bg-slate-200"></div>
+                        </div>
+
+                        <div className="flex-1 flex flex-col overflow-hidden relative">
+                            {view === 'landing' && (
+                                <LandingView 
+                                    isMailboxOpen={isMailboxOpen} 
+                                    onOpen={() => setIsMailboxOpen(true)}
+                                    onClose={() => setIsMailboxOpen(false)}
+                                    onSelectLetter={(letter) => { setSelectedLetter(letter); navigateTo('reading'); }}
+                                    receivedLetters={receivedLetters}
+                                    onWriteDirect={() => navigateTo('writing')}
+                                    onCreateMailbox={handleCreateMailboxStart}
+                                />
+                            )}
+                            
+                            {view === 'reading' && (
+                                <ReadingView 
+                                    letter={selectedLetter} 
+                                    onWrite={handleCreateMailboxStart} 
+                                    onBack={() => navigateTo('landing')}
+                                />
+                            )}
+
+                            {view === 'writing' && (
+                                <WritingView 
+                                    data={newLetter} 
+                                    setData={setNewLetter} 
+                                    onComplete={handleSendLetter} 
+                                    onBack={() => navigateTo('landing')}
+                                />
+                            )}
+
+                            {view === 'success' && (
+                                <SuccessView 
+                                    data={newLetter}
+                                    onReset={() => {
+                                        setNewLetter({ receiver: "세이", sender: "", moodTag: "사랑을 담아서", hint: "", content: "", song: null });
+                                        setIsMailboxOpen(false);
+                                        navigateTo('landing');
+                                    }} 
+                                    onCreateMailbox={handleCreateMailboxStart}
+                                />
+                            )}
+                        </div>
+
+                        {showMembershipModal && (
+                            <div className="absolute inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-8 animate-in fade-in duration-300">
+                                <div className="bg-white w-full rounded-[2.5rem] p-10 shadow-2xl flex flex-col items-center text-center space-y-6 scale-up overflow-hidden relative">
+                                    <div className="absolute top-0 right-0 w-32 h-32 bg-[#E65D47]/5 rounded-full blur-3xl"></div>
+                                    <div className="w-16 h-16 bg-[#E65D47] rounded-3xl flex items-center justify-center shadow-xl shadow-[#E65D47]/30 rotate-3 transition-transform hover:rotate-0 duration-500">
+                                        <Icon name="sparkles" size={32} className="text-white fill-white" />
+                                    </div>
+                                    <div className="space-y-3">
+                                        <h3 className="text-[20px] font-black text-slate-900 leading-tight tracking-tight">나만의 우편함 만들기</h3>
+                                        <p className="text-[14px] text-slate-500 leading-relaxed">
+                                            회원가입 후 링크를 공유하고<br />
+                                            세상에 하나뿐인 **'감성 편지'**와<br />**'취향 노래'**를 선물 받아보세요.
+                                        </p>
+                                    </div>
+                                    <div className="w-full space-y-3 pt-2">
+                                        <button 
+                                            onClick={() => { setShowMembershipModal(false); navigateTo('landing'); }}
+                                            className="w-full py-4 bg-[#E65D47] text-white rounded-2xl font-bold shadow-lg shadow-[#E65D47]/20 active:scale-95 transition-all text-[15px]"
+                                        >
+                                            3초만에 우편함 시작하기
+                                        </button>
+                                        <button onClick={() => setShowMembershipModal(false)} className="w-full py-3 text-slate-400 text-[12px] font-bold tracking-widest uppercase">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                    <div className="mt-6 text-slate-300 text-[12px] font-bold tracking-[0.4em] uppercase opacity-80">Winter Letter : Warmth in every word</div>
+                </div>
+            );
+        };
+
+        const LandingView = ({ isMailboxOpen, onOpen, onClose, onSelectLetter, receivedLetters, onWriteDirect, onCreateMailbox }) => (
+            <div className="flex-1 flex flex-col items-center justify-center p-6 h-full relative overflow-hidden" onClick={(e) => isMailboxOpen && e.target === e.currentTarget && onClose()}>
+                {isMailboxOpen && (
+                    <div className="absolute top-8 left-0 right-0 text-center animate-in fade-in slide-in-from-top-4 duration-700 z-50">
+                        <span className="text-[12px] font-black text-[#E65D47] uppercase tracking-[0.4em] bg-white/70 border border-slate-100 px-4 py-1.5 rounded-full backdrop-blur-md shadow-sm">
+                            {receivedLetters.length} Letters found
+                        </span>
+                    </div>
+                )}
+                <div className={`text-center mb-16 transition-all duration-700 pointer-events-none ${isMailboxOpen ? 'opacity-0 -translate-y-20 scale-90' : 'opacity-100'}`}>
+                    <h2 className="text-[20px] font-black text-slate-900 mb-3 leading-tight flex flex-col items-center gap-3">
+                        <span>세이님께 노래 추천과 편지가</span>
+                        <span className="flex items-center gap-2 justify-center py-1 px-4 bg-[#E65D47]/5 rounded-full">
+                            <span className="text-[#E65D47]">{receivedLetters.length}통</span> 도착했습니다!
+                            <Icon name="mail" size={22} className="text-[#E65D47]" />
+                        </span>
+                    </h2>
+                    <p className="text-slate-400 text-[14px] font-medium leading-relaxed opacity-70 px-4">차가운 공기를 뚫고 우편함에 담긴<br />당신만을 위한 따뜻한 편지를 열어보세요.</p>
+                </div>
+
+                <div className="relative w-full flex flex-col items-center pointer-events-none">
+                    <div onClick={onOpen} className={`relative w-56 h-44 bg-[#E65D47] border border-[#E65D47]/20 rounded-t-[100px] rounded-b-[2rem] shadow-[0_30px_60px_-10px_rgba(230,93,71,0.3)] z-20 cursor-pointer transition-all duration-1000 mailbox-float pointer-events-auto ${isMailboxOpen ? 'scale-[0.1] translate-y-80 opacity-0 blur-2xl' : 'opacity-100'}`}>
+                        <div className="absolute inset-0 bg-white/10 rounded-t-[100px]"></div>
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center w-full">
+                            <div className="w-20 h-2 bg-[#c44d3b] rounded-full mb-6 shadow-inner"></div>
+                            <div className="w-10 h-6 border-2 border-white/20 rounded-xl flex items-center justify-center">
+                                <div className="w-5 h-1 bg-white/30 rounded-full"></div>
+                            </div>
+                            <div className="mt-8 animate-bounce text-[12px] font-black text-white/50 tracking-[0.3em] uppercase tracking-widest">Open</div>
+                        </div>
+                        <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-2 h-16 bg-white rounded-full origin-bottom flag-wiggle shadow-sm">
+                            <div className="absolute -top-3 -left-3 w-7 h-9 bg-white rounded shadow-sm flex items-center justify-center">
+                                <div className="w-1 h-5 bg-[#E65D47]/20 rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {isMailboxOpen && (
+                        <div className="absolute inset-0 z-40 flex flex-col items-center justify-center animate-in fade-in zoom-in duration-700 pointer-events-auto">
+                            <div className="carousel-container w-full">
+                                {receivedLetters.map((letter) => (
+                                    <div key={letter.id} onClick={(e) => { e.stopPropagation(); onSelectLetter(letter); }} className="carousel-item w-44 h-64 bg-white border border-slate-100 rounded-[2rem] shadow-[0_15px_35px_-5px_rgba(0,0,0,0.06)] paper-texture flex flex-col p-6 cursor-pointer active:scale-95 transition-all hover:-translate-y-2">
+                                        <div className="flex justify-between items-start mb-4">
+                                            <div className="text-[12px] font-black text-[#E65D47] opacity-60">#{letter.id}</div>
+                                            <Icon name="stamp" size={14} className="text-slate-200" />
+                                        </div>
+                                        <div className="flex-1 flex flex-col items-center justify-center space-y-3 text-center">
+                                            <div className="px-3 py-1.5 bg-[#E65D47]/5 rounded-full text-[12px] font-bold text-[#E65D47] truncate w-full">{letter.moodTag}</div>
+                                            <div className="w-full h-1.5 bg-slate-50 rounded-full"></div>
+                                            <div className="w-2/3 h-1.5 bg-slate-50 rounded-full opacity-60"></div>
+                                        </div>
+                                        <div className="mt-auto flex justify-between items-center pt-3 border-t border-slate-50">
+                                            <p className="text-[14px] font-black text-slate-800 truncate pr-2">{letter.sender}</p>
+                                            <Icon name="chevron-right" size={18} className="text-[#E65D47]" />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="flex items-center gap-2 mt-4 text-slate-300">
+                                <div className="w-8 h-px bg-slate-200"></div>
+                                <p className="text-[12px] font-bold uppercase tracking-[0.2em]">Swipe to Browse</p>
+                                <div className="w-8 h-px bg-slate-200"></div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+                {!isMailboxOpen && <div className="mt-12 w-24 h-2 bg-slate-200/20 rounded-full blur-md"></div>}
+                <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-4 px-8 pointer-events-auto z-50">
+                    <button onClick={onWriteDirect} className="w-full py-4 bg-[#E65D47] text-white rounded-2xl font-bold flex items-center justify-center gap-3 shadow-xl shadow-[#E65D47]/20 active:scale-95 transition-all text-[15px] tracking-tight">
+                        <Icon name="pen-tool" size={18} /> 친구에게 편지 보내기
+                    </button>
+                    <div className="flex items-center gap-5 w-full justify-center">
+                        <button onClick={onCreateMailbox} className="text-[12px] font-bold text-slate-400 hover:text-slate-600 transition-colors flex items-center gap-1.5 underline underline-offset-4 decoration-slate-200">나도 우편함 만들기</button>
+                        <div className="w-1 h-1 rounded-full bg-slate-200"></div>
+                        <button className="text-[12px] font-bold text-slate-400 hover:text-slate-600 transition-colors flex items-center gap-1.5"><Icon name="share-2" size={14} /> 공유하기</button>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const ReadingView = ({ letter, onWrite, onBack }) => (
+            <div className="flex-1 flex flex-col p-6 space-y-5 animate-in fade-in zoom-in duration-500 overflow-y-auto">
+                <div className="flex justify-between items-center">
+                    <button onClick={onBack} className="p-2 -ml-2 text-slate-400 hover:text-slate-600 transition-colors"><Icon name="arrow-left" size={22} /></button>
+                    <div className="px-3 py-1 bg-slate-50 rounded-full text-[12px] font-black text-[#E65D47] uppercase tracking-widest italic">{letter.moodTag}</div>
+                </div>
+                <div className="bg-white border border-slate-100 rounded-[2.5rem] p-8 shadow-sm paper-texture flex-1 flex flex-col min-h-[460px] relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-[#E65D47]/5 rounded-bl-full -z-10"></div>
+                    {letter.hint && (
+                        <div className="mb-8 p-4 bg-slate-50/50 rounded-2xl border border-slate-100/50 flex items-start gap-3">
+                            <Icon name="zap" size={16} className="text-[#E65D47] mt-0.5" />
+                            <div className="space-y-1">
+                                <p className="text-[12px] font-black text-[#E65D47] uppercase tracking-wider">비밀 힌트</p>
+                                <p className="text-[14px] text-slate-500 font-medium leading-relaxed italic">"{letter.hint}"</p>
+                            </div>
+                        </div>
+                    )}
+                    <p className="text-[16px] leading-[1.8] text-slate-800 font-normal mb-12 whitespace-pre-wrap">{letter.content}</p>
+                    <div className="mt-auto bg-[#FDFCFB] border border-slate-100 rounded-[1.5rem] p-4 flex items-center gap-4 group cursor-pointer">
+                        <div className={`w-16 h-16 rounded-2xl shadow-lg flex-shrink-0 relative overflow-hidden border border-white/20`} style={{ backgroundColor: letter.song.color || '#E65D47' }}>
+                            <div className="absolute inset-0 bg-black/10 flex items-center justify-center"><Icon name="play" size={20} className="text-white fill-white" /></div>
+                        </div>
+                        <div className="flex-1 min-w-0 text-left">
+                            <h5 className="text-[14px] font-black truncate text-slate-800">{letter.song.title}</h5>
+                            <p className="text-[12px] text-slate-400 font-medium truncate">{letter.song.artist}</p>
+                        </div>
+                    </div>
+                    <div className="mt-8 text-right">
+                        <p className="text-[12px] font-bold text-slate-300 italic">Warmly,</p>
+                        <p className="text-[18px] font-black text-slate-900 tracking-tight mt-1">{letter.sender}</p>
+                    </div>
+                </div>
+                <button onClick={onWrite} className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold shadow-xl active:scale-95 transition-all text-[15px]">나도 편지함 만들고 편지 받기</button>
+            </div>
+        );
+
+        const WritingView = ({ data, setData, onComplete, onBack }) => {
+            const [searchQuery, setSearchQuery] = useState("");
+            const [searchResults, setSearchResults] = useState([]);
+            const [isSearching, setIsSearching] = useState(false);
+            const [isAnonymous, setIsAnonymous] = useState(false);
+
+            const vibes = [
+                { label: "사랑을 담아서", icon: "heart" },
+                { label: "감동을 담아서", icon: "smile" },
+                { label: "애교를 담아서", icon: "gift" },
+                { label: "취업 성공을 담아서", icon: "target" },
+                { label: "건강을 담아서", icon: "activity" },
+                { label: "새해 대운을 담아서", icon: "sparkles" }
+            ];
+
+            const colors = ["#FFB5B5", "#AEC6CF", "#CFCABC", "#FDFD96", "#FFD1DC", "#B19CD9"];
+
+            const searchSpotify = (query) => {
+                if (!query) return;
+                setIsSearching(true);
+                setTimeout(() => {
+                    const mockResults = [
+                        { id: '1', title: 'Winter Bear', artist: 'V', color: colors[0] },
+                        { id: '2', title: 'Snow', artist: 'Zion.T (feat. 이문세)', color: colors[1] },
+                        { id: '3', title: 'White Christmas', artist: 'Laufey', color: colors[2] },
+                    ].filter(t => t.title.toLowerCase().includes(query.toLowerCase()));
+                    setSearchResults(mockResults);
+                    setIsSearching(false);
+                }, 600);
+            };
+
+            return (
+                <div className="flex-1 flex flex-col p-6 space-y-4 animate-in slide-in-from-right duration-500 overflow-y-auto">
+                    <div className="flex items-center gap-3">
+                        <button onClick={onBack} className="p-2 -ml-2 text-slate-400"><Icon name="arrow-left" size={22} /></button>
+                        <h2 className="text-[18px] font-black text-slate-900 tracking-tight">편지 담기</h2>
+                    </div>
+                    <div className="space-y-6 flex-1">
+                        <div className="space-y-3">
+                            <label className="text-[12px] font-black text-slate-400 uppercase tracking-widest ml-1">마음 선택</label>
+                            <div className="flex flex-wrap gap-2">
+                                {vibes.map(v => (
+                                    <button key={v.label} onClick={() => setData({...data, moodTag: v.label})} className={`flex items-center gap-2 px-4 py-2 rounded-full text-[13px] font-bold transition-all ${data.moodTag === v.label ? 'bg-[#E65D47] text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200 shadow-sm'}`}>
+                                        <Icon name={v.icon} size={14} className={data.moodTag === v.label ? "fill-white" : ""} /> {v.label}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-[12px] font-black text-slate-400 uppercase tracking-widest ml-1">메시지</label>
+                            <textarea className="w-full bg-slate-50 border-none rounded-[1.5rem] px-5 py-4 text-[16px] focus:ring-2 focus:ring-[#E65D47]/20 outline-none min-h-[140px] leading-relaxed resize-none" placeholder="올 겨울, 친구에게 전하고 싶은 따뜻한 진심은?" value={data.content} onChange={(e) => setData({...data, content: e.target.value})} />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-[12px] font-black text-slate-400 uppercase tracking-widest ml-1">비밀 힌트 (선택)</label>
+                            <input className="w-full bg-slate-50 border-none rounded-xl px-5 py-3.5 text-[14px] outline-none italic" placeholder="누구인지 알 수 있는 작은 힌트를 남겨보세요" value={data.hint} onChange={(e) => setData({...data, hint: e.target.value})} />
+                        </div>
+                        <div className="space-y-2">
+                            <div className="flex justify-between items-center ml-1">
+                                <label className="text-[12px] font-black text-slate-400 uppercase tracking-widest">보내는 사람</label>
+                                <button onClick={() => { setIsAnonymous(!isAnonymous); setData({...data, sender: !isAnonymous ? "익명" : ""}); }} className={`text-[12px] font-bold px-3 py-1 rounded-full transition-all ${isAnonymous ? 'bg-[#E65D47] text-white shadow-md' : 'bg-slate-100 text-slate-500'}`}>
+                                    {isAnonymous ? '익명 모드 켜짐' : '익명으로 보낼까요?'}
+                                </button>
+                            </div>
+                            <input className={`w-full bg-slate-50 border-none rounded-xl px-5 py-3.5 text-[15px] focus:ring-2 focus:ring-[#E65D47]/20 outline-none ${isAnonymous ? 'opacity-50 pointer-events-none' : ''}`} placeholder="이름을 입력하세요" value={data.sender} onChange={(e) => setData({...data, sender: e.target.value})} />
+                        </div>
+                        <div className="space-y-3 pt-2">
+                            <label className="text-[12px] font-black text-[#E65D47] uppercase tracking-widest ml-1 opacity-60">추천 노래 한 장</label>
+                            {data.song ? (
+                                <div className="bg-[#E65D47] text-white rounded-2xl p-4 flex items-center gap-4 relative overflow-hidden shadow-lg">
+                                    <div className="w-14 h-14 rounded-xl flex-shrink-0 shadow-inner border border-white/20" style={{ backgroundColor: data.song.color }}></div>
+                                    <div className="flex-1 min-w-0 text-left">
+                                        <p className="text-[14px] font-black truncate leading-tight">{data.song.title}</p>
+                                        <p className="text-[12px] opacity-70 truncate">{data.song.artist}</p>
+                                    </div>
+                                    <button onClick={() => setData({...data, song: null})} className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors"><Icon name="x" size={16} /></button>
+                                </div>
+                            ) : (
+                                <div className="space-y-2 text-left">
+                                    <div className="relative">
+                                        <input className="w-full bg-slate-900 text-white border-none rounded-2xl pl-12 pr-4 py-4 text-[15px] outline-none shadow-xl" placeholder="분위기에 어울리는 노래 검색..." value={searchQuery} onChange={(e) => { setSearchQuery(e.target.value); searchSpotify(e.target.value); }} />
+                                        <Icon name="search" size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                                    </div>
+                                    <div className="space-y-1 max-h-36 overflow-y-auto">
+                                        {isSearching ? <div className="text-center py-2 text-slate-300 text-[12px] italic">노래를 찾고 있어요...</div> : searchResults.map(track => (
+                                            <button key={track.id} onClick={() => { setData({...data, song: track}); setSearchResults([]); setSearchQuery(""); }} className="w-full flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors group text-left">
+                                                <div className="w-10 h-10 rounded-lg shadow-sm" style={{ backgroundColor: track.color }}></div>
+                                                <div className="flex-1 min-w-0">
+                                                    <p className="text-[14px] font-black truncate group-hover:text-[#E65D47]">{track.title}</p>
+                                                    <p className="text-[12px] text-slate-400 truncate">{track.artist}</p>
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    <button onClick={() => data.song ? onComplete(data) : alert("노래를 선택해주세요!")} className="mt-auto w-full py-4 bg-[#E65D47] text-white rounded-2xl font-black active:scale-95 transition-all shadow-xl shadow-[#E65D47]/10 text-[16px] tracking-tight">편지 보내기</button>
+                </div>
+            );
+        };
+
+        const SuccessView = ({ data, onReset, onCreateMailbox }) => (
+            <div className="flex-1 flex flex-col p-6 items-center justify-center space-y-10 animate-in zoom-in duration-500 h-full text-center">
+                <div className="w-[240px] bg-white p-4 shadow-2xl rotate-[-2deg] rounded-sm flex flex-col border border-slate-100 mx-auto">
+                    <div className={`w-full aspect-square bg-gradient-to-br from-[#E65D47]/10 to-[#E65D47]/30 rounded-xs mb-4 flex items-center justify-center overflow-hidden relative`} style={{ backgroundColor: data.song?.color }}>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
+                            <Icon name="heart" size={24} className="text-[#E65D47] fill-[#E65D47] mb-2" />
+                            <p className="text-[12px] font-black text-slate-800 leading-tight">겨울 바람 타고 도착한<br/>따뜻한 진심</p>
+                        </div>
+                    </div>
+                    <div className="space-y-1 text-left">
+                        <p className="text-[10px] font-black text-[#E65D47] italic uppercase tracking-tighter">Winter Letter</p>
+                        <p className="text-[15px] font-bold text-slate-900 truncate leading-none">To. {data.receiver}</p>
+                        <div className="flex justify-between items-end mt-1">
+                            <p className="text-[10px] text-slate-400">Dec 2025</p>
+                            <div className="w-5 h-5 bg-slate-900 rounded-full flex items-center justify-center"><Icon name="check" size={10} className="text-white" /></div>
+                        </div>
+                    </div>
+                </div>
+                <div className="space-y-3">
+                    <h3 className="text-[20px] font-black text-slate-900 tracking-tight leading-tight">편지가 성공적으로 전송되었어요!</h3>
+                    <p className="text-[14px] text-slate-400 font-medium">상대방이 스토리에 공유할 수도 있어요 :)</p>
+                </div>
+                <div className="w-full space-y-4 pt-4">
+                    <button onClick={onCreateMailbox} className="w-full py-4 bg-slate-900 text-white rounded-2xl font-black flex items-center justify-center gap-2 shadow-xl active:scale-95 transition-all text-[15px]">
+                        <Icon name="sparkles" size={18} className="text-white fill-white" /> 나만의 우편함 만들기
+                    </button>
+                    <div className="flex items-center gap-6 justify-center">
+                        <button onClick={onReset} className="text-slate-400 font-bold text-[12px] uppercase tracking-widest hover:text-slate-600 transition-colors">Back Home</button>
+                        <div className="w-1.5 h-1.5 rounded-full bg-slate-200"></div>
+                        <button className="text-[#E65D47] font-black text-[12px] uppercase tracking-widest flex items-center gap-2"><Icon name="share-2" size={14} /> 공유하기</button>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
